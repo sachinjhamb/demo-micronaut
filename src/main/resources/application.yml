@@ -3,6 +3,9 @@ micronaut:
     name: demo
   server:
     port: 8080
+market:
+  controller:
+    path: "/markets"
 hello:
   controller:
     path: "/hello"

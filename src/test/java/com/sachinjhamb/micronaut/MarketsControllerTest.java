@@ -4,29 +4,33 @@ import io.micronaut.http.client.RxHttpClient;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.runtime.EmbeddedApplication;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
-import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.Test;
 
 import javax.inject.Inject;
+import java.util.List;
 
 @MicronautTest
-class HelloWorldControllerTest {
+public class MarketsControllerTest {
 
     @Inject
-    EmbeddedApplication<?> application;
+    EmbeddedApplication application;
 
     @Inject
     @Client("/")
     RxHttpClient client;
 
+
     @Test
     void testItWorks() {
-        Assertions.assertTrue(application.isRunning());
+
+        assertTrue(application.isRunning());
     }
 
     @Test
-    void testHelloResponse() {
-        final String result = client.toBlocking().retrieve("/hello");
-        Assertions.assertEquals("Hello from service", result);
+    void testNumberOfMarketSymbols(){
+        final List result = client.toBlocking().retrieve("/markets", List.class);
+        assertEquals(1, result.size());
     }
 }
